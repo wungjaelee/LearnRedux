@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var {Route, Router, IndexRoute, hashHistory} = require('react-router');
 
-// Load foundation
+//Load foundation
 $(document).foundation();
 
 // App css
@@ -13,4 +13,5 @@ ReactDOM.render(
   document.getElementById('app')
 );
 
-require('./redux-example.jsx');
+// require('./redux-example.jsx');
+require('./redux-todo-example.jsx');
