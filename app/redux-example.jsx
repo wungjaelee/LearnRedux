@@ -7,15 +7,10 @@ console.log('Starting redux example');
 // 2. no global variables
 // 3. synchronous
 
-var stateDefault = {
-  name: 'anonymous',
-  hobbies: [],
-  movies: []
-}
+// Name reducer and action genreators
+// ----------------
 
 var nextHobbyId = 1;
-var nextMovieId = 1;
-
 var nameReducer = (state = 'Anonymous', action) => {
   switch (action.type) {
     case 'CHANGE_NAME':
@@ -25,6 +20,15 @@ var nameReducer = (state = 'Anonymous', action) => {
   };
 };
 
+var changeName = (name) => {
+  return {
+    type: 'CHANGE_NAME',
+    name
+  };
+};
+
+// Hobbies reducer and action genreators
+// ----------------
 var hobbiesReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_HOBBY':
@@ -42,6 +46,23 @@ var hobbiesReducer = (state = [], action) => {
   };
 };
 
+var addHobby = (hobby) => {
+  return {
+    type: 'ADD_HOBBY',
+    hobby
+  };
+};
+
+var removeHobby = (id) => {
+  return {
+    type: 'REMOVE_HOBBY',
+    id
+  };
+};
+
+// Movies reducer and action genreators
+// ----------------
+var nextMovieId = 1;
 var moviesReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_MOVIE':
@@ -57,6 +78,21 @@ var moviesReducer = (state = [], action) => {
       return state.filter((movie) => movie.id !== action.id);
     default:
       return state;
+  };
+};
+
+var addMovie = (movieTitle, movieGenre) => {
+  return {
+    type: 'ADD_MOVIE',
+    movieTitle,
+    movieGenre
+  };
+};
+
+var removeMovie = (id) => {
+  return {
+    type: 'REMOVE_MOVIE',
+    id
   };
 };
 
@@ -82,48 +118,18 @@ var unsubscribe = store.subscribe(() => {
 var currentState = store.getState();
 console.log('currentState', currentState);
 
-store.dispatch({
-  type: 'CHANGE_NAME',
-  name: 'Wungjae'
-});
+store.dispatch(changeName('Wungjae'))
 
+store.dispatch(addHobby('running'))
 
-store.dispatch({
-  type: 'CHANGE_NAME',
-  name: 'Emily'
-});
+store.dispatch(addMovie('Avengers', 'Action'))
 
-store.dispatch({
-  type: 'ADD_HOBBY',
-  hobby: 'running'
-});
+store.dispatch(changeName('Emily'))
 
-store.dispatch({
-  type: 'ADD_HOBBY',
-  hobby: 'swimming'
-});
+store.dispatch(addHobby('swimming'))
 
-store.dispatch({
-  type: 'ADD_MOVIE',
-  movieTitle: 'Avengers',
-  movieGenre: 'Action'
-});
+store.dispatch(addMovie('Lucky for you', 'Thats what I like'))
 
-store.dispatch({
-  type: 'ADD_MOVIE',
-  movieTitle: 'Lucky for you',
-  movieGenre: 'Thats what I like'
-});
+store.dispatch(removeHobby(2))
 
-store.dispatch({
-  type: 'REMOVE_HOBBY',
-  id: 2
-});
-
-store.dispatch({
-  type: 'REMOVE_MOVIE',
-  id: 2
-});
-
-
-console.log('Name should be Wungjae', store.getState());
+store.dispatch(removeMovie(2))
