@@ -8,9 +8,26 @@ console.log('Starting redux example');
 // 3. synchronous
 
 var reducer = (state = {name: 'anonymous'}, action) => {
-  return state;
-}
+  switch (action.type) {
+    case 'CHANGE_NAME':
+      return {
+        ...state,
+        name: action.name
+      };
+    default:
+      return state;
+  }
+};
+
 var store = redux.createStore(reducer);
 
 var currentState = store.getState();
 console.log('currentState', currentState);
+
+store.dispatch({
+  type: 'CHANGE_NAME',
+  name: 'Wungjae'
+});
+
+
+console.log('Name should be Wungjae', store.getState());

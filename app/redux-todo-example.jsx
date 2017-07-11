@@ -9,10 +9,23 @@ var stateDefault = {
 };
 
 var reducer = (state = stateDefault, action) => {
-  return state;
+  switch (action.type) {
+    case 'CHANGE_SEARCHTEXT':
+      return {
+        ...state,
+        searchText: action.searchText
+      };
+    default:
+      return state;
+  }
 };
 
 var store = redux.createStore(reducer);
 
-var currentState = store.getState();
-console.log('currentState', currentState);
+console.log('currentState', store.getState());
+
+store.dispatch({
+  type: 'CHANGE_SEARCHTEXT',
+  searchText: 'nicenice'
+});
+console.log('searchText should be "nicenice"', store.getState());
